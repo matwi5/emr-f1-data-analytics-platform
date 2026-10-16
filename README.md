@@ -66,8 +66,6 @@ ECE-BIGDATA-2024-FALL
 │   ├── hbase_populate_openF1.py
 │   ├── populate.log
 │   └── spark_process.py
-├── PolePredict Cluster.pem
-├── PolePredict Cluster.ppk
 └── README.md
 ```
 
@@ -78,7 +76,7 @@ Setting up the EMR cluster involves several key steps, detailed in the `installa
 ### Prerequisites
 
 -   AWS CLI installed and configured.
--   "PolePredict Cluster" SSH key pair created in the `eu-west-3` region.
+-   An EC2 SSH key pair in the `eu-west-3` region (the private key stays outside the repository).
 -   IAM roles properly configured.
 -   VPC and subnet configured in the `eu-west-3` region.
 
@@ -96,11 +94,8 @@ Ensuring secure access to the cluster is paramount. Steps to configure the neces
 
 ### Access Configuration
 
--   **SSH Access**: Enabled using the "PolePredict Cluster" key pair.
--   **Web Interfaces**: Accessible via the master node's public DNS:
-    -   JupyterHub: `https://<master-node-dns>:9443`
-    -   HBase UI: `http://<master-node-dns>:16010`
-    -   Spark History Server: `http://<master-node-dns>:18080`
+-   **SSH Access**: Key-based authentication with the cluster's EC2 key pair. Limit the inbound SSH rule of the security group to your own IP (`/32`).
+-   **Web Interfaces**: JupyterHub, the HBase UI and the Spark History Server run on the primary node on their default EMR ports. Reach them through an SSH tunnel rather than opening these ports to the Internet.
 
 ## Data Processing Pipeline
 
